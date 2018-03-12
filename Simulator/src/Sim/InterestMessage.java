@@ -3,7 +3,7 @@ package Sim;
 public class InterestMessage implements Event{
 	private String name;
 	public InterestMessage(String name){
-		
+		this.name = name;
 	}
 	public void entering(SimEnt locale) {
 		// TODO Auto-generated method stub
