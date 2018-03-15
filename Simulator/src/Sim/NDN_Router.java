@@ -20,10 +20,11 @@ public class NDN_Router extends SimEnt{
 			InterestMessage msg = (InterestMessage)ev;
 			//If data is in content store, send the data immediately
 			if(CS.containsKey(msg.getName())) {
-				System.out.println("Data is cached in content store");
+				System.out.println("Router: " + id + " Data is cached in content store");
+				System.out.println("Router: " + id + " Sends data packet back");
 				send(src,CS.get(msg.getName()),0);
 			}else {
-				System.out.println("Adding to PIT");
+				System.out.println("Router: " + id + " Adding to PIT");
 				PIT.add(new PendingInterest(msg,src));
 				forward(msg,src);
 			

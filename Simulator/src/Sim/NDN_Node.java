@@ -15,20 +15,25 @@ public class NDN_Node extends SimEnt{
 	public void recv(SimEnt source, Event event) {
 		if(event instanceof NDN_Data) {
 			NDN_Data data = (NDN_Data)event;
-			System.out.println(data.getData());
+			System.out.println("Node: " + id + " received data with name: " + data.getName() +  " containing data: " +  data.getData());
 		}
 		
 		if(event instanceof InterestMessage) {
-			System.out.println("Node: "+id + " Received Interest Msg!!");
+			System.out.println("Node: "+id + " Received Interest Msg");
 			InterestMessage msg = (InterestMessage)event;
 			for (int i = 0; i < dataStore.size(); i++) {
-				System.out.println(dataStore.elementAt(i).getName());
-				System.out.println(msg.getName());
+				
 				if(dataStore.elementAt(i).getName() == msg.getName()) {
-					System.out.println("Found data in data store");
+					System.out.println("Node: " + id + " found data with name " + dataStore.elementAt(i).getName());
+					System.out.println("Node: " + id + " Sends data packet back");
 					send(source,dataStore.elementAt(i),0);
 				}
 			}
+		}
+		if(event instanceof NDN_TimerEvent) {
+			NDN_TimerEvent msg = ((NDN_TimerEvent) event);
+			System.out.println("Node: " + id + " Sends interest message for: " + msg.getName());
+			send(_peer,new InterestMessage(msg.getName()),0);
 		}
 	}
 	
@@ -44,9 +49,10 @@ public class NDN_Node extends SimEnt{
 		}
 	}
 	
-	//Schedules an interestmsg to be sent after a given time
+	//Schedules an interest message to be sent after a given time
 	public void sendInterestMessageAfterTime(String name, int time) {
-		send(_peer,new InterestMessage(name),time);
+//		send(_peer,new InterestMessage(name),time);
+		send(this,new NDN_TimerEvent(name),time);
 	}
 	
 	public void setData(String name, String data) {

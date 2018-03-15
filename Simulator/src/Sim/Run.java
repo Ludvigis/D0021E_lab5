@@ -29,8 +29,11 @@ public class Run {
 		r2.connectInterface(link3);
 		r2.connectInterface(link2);
 		
+		//host 2 will hold the data Video with contents Data123
 		host2.setData("Video","Data123");
+		//host1 sends an interest message for Video after 5 seconds
 		host1.sendInterestMessageAfterTime("Video", 5);
+		//host3 sends an interest message for Video after 20 seconds
 		host3.sendInterestMessageAfterTime("Video", 20);
 		
 		// Start the simulation engine and of we go!

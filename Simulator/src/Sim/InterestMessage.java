@@ -7,7 +7,6 @@ public class InterestMessage implements Event{
 	}
 	public void entering(SimEnt locale) {
 		// TODO Auto-generated method stub
-		
 	}
 	public String getName() {
 		return name;
